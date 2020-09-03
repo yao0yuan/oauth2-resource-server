@@ -1,0 +1,20 @@
+.project
+.classpath
+target
+logs
+.settings
+.sts4-cache
+.factorypath
+.log
+README.md
+.idea/
+.iml
+
+# ---- macos
+.DS_Store
+
+# ---- Eclipse
+.externalToolBuilders
+
+# ---- IDEA
+*.iml

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.youzi.resource.server.mapper.UserInfoMapper">
+
+    <select id="getLoginUserInfo" resultType="map">
+        SELECT
+        	u.id AS userId,
+        	u.login_name AS loginName,
+        	u.`password` AS password,
+        	u.user_name AS userName
+        FROM
+        	`user` u
+        WHERE
+        	u.login_name = #{loginName}
+    </select>
+
+    <select id="queryUserRoleByLoginName" resultType="com.youzi.common.server.vo.UserRoleInfoVo">
+        SELECT
+        	r.id AS roleId,
+        	r.role_name AS roleName,
+        	r.role_type AS roleType
+        FROM
+        	role r
+         LEFT JOIN user_role_join urj ON r.id = urj.role_id
+         WHERE urj.user_id = #{userId}
+    </select>
+
+</mapper>
