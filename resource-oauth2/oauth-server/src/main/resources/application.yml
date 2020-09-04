@@ -71,7 +71,9 @@ feign:
   httpclient:
     enabled: false
 
-
+logging:
+  config: classpath:logback-spring.xml
+  path: logs/${spring.application.name}/error.log
 
 
 

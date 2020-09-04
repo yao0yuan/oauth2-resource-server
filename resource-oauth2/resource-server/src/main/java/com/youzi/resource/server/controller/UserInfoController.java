@@ -3,6 +3,8 @@ package com.youzi.resource.server.controller;
 import com.youzi.common.server.result.JsonResult;
 import com.youzi.common.server.vo.UserDetailInfoVo;
 import com.youzi.resource.server.service.UserInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("UserInfoController")
 public class UserInfoController {
+
+    private static Logger logger = LoggerFactory.getLogger(UserInfoController.class);
 
     @Autowired
     private UserInfoService userInfoService;
@@ -28,6 +32,7 @@ public class UserInfoController {
 
     @PostMapping("hhh")
     public String hhh(){
+        logger.info("测试日志输出");
         return "guaguagua";
     }
 }

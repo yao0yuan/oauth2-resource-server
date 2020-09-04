@@ -7,11 +7,14 @@ import com.youzi.common.server.feign.OauthServiceFeign;
 import com.youzi.common.server.result.JsonResult;
 import com.youzi.common.server.util.CacheUtil;
 import com.youzi.common.server.util.JsonResultUtil;
+import com.youzi.resource.server.controller.UserInfoController;
 import com.youzi.resource.server.mapper.LoginMapper;
 import com.youzi.resource.server.service.LoginService;
 import com.youzi.resource.server.service.UserInfoService;
 import com.youzi.resource.server.vo.LoginUserReqVo;
 import com.youzi.resource.server.vo.RegistUserReqVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ import static com.youzi.common.server.result.JsonResult.SUCCESS;
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    private static Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
+
 
     @Autowired
     private LoginMapper loginMapper;
@@ -37,6 +42,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public JsonResult<Map<String, Object>> login(LoginUserReqVo loginUserReqVo) {
+        logger.info("登录，入参封装："+JSON.toJSONString(loginUserReqVo));
         JsonResult<Map<String,Object>> jsonResult = new JsonResult<>();
         try {
             final Map<String, String> parameters = new HashMap<String, String>();
@@ -60,7 +66,9 @@ public class LoginServiceImpl implements LoginService {
             tokenMap.put("accessToken", accessToken);
             tokenMap.put("refreshToken", refreshToken);
             JsonResultUtil.setJsonResult(jsonResult, SUCCESS, JsonResultEnum.SUCCESS,tokenMap);
+            logger.info("用户："+loginUserReqVo.getLoginName()+"登录成功！");
         }catch (Exception e){
+            logger.error("用户登录失败，",e);
             JsonResultUtil.setJsonResult(jsonResult, JsonResult.FAIL, JsonResultEnum.INTERNAL_SERVER_ERROR);
         }
         return jsonResult;
